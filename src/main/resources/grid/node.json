@@ -1,0 +1,25 @@
+{
+  "capabilities":
+      [
+        {
+          "browserName": "firefox",
+          "maxInstances": 15
+        },
+        {
+          "browserName": "chrome",
+          "maxInstances": 15
+        }
+      ],
+    "configuration":
+        {
+        "nodeTimeout":120,
+        "port":5556,
+        "hubPort":4444,
+        "hubHost":"10.8.15.52",
+        "nodePolling":2000,
+        "registerCycle":10000,
+        "register":true,
+        "cleanUpCycle":2000,
+        "maxSession":15
+        }
+}

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CityAds Testsuite" verbose="1" parallel="tests">
+
+<!--    <test name="Авторизация ВМа">
+        <classes>
+            <class name="wm.login.LoginTest"/>
+            <class name="wm.login.LoginFailTest"/>
+            <class name="wm.login.LoginEmptyTest"/>
+        </classes>
+    </test>
+
+    <test name="Авторизация Менеджера">
+        <classes>
+            <class name="mgr.LoginTest"/>
+        </classes>
+    </test>-->
+
+<!--    <test name="Финансы Вебмастера">
+        <classes>
+            <class name="mgr.Users.FinanceSudoWmTest"/>
+        </classes>
+    </test>-->
+
+    <test name="Сравнение скринов">
+        <classes>
+            <class name="wm.corpsite.ScreenTest"/>
+        </classes>
+    </test>
+
+<!--    <test name="Финансы Менеджера фильтр">
+        <classes>
+            <class name="mgr.Finance.FinanceKeywordTest"/>
+            <class name="mgr.Finance.FinanceCommisionCurrencyFilterTest"/>
+            <class name="mgr.Finance.FinancePayoutCurrencyFilterTest"/>
+            <class name="mgr.Finance.FinancePaginatorTest"/>
+        </classes>
+    </test>-->
+<!--
+    <test name="API">
+        <classes>
+            <class name="api.DashboardApiTest"/>
+            <class name="api.OffersApiTest"/>
+        </classes>
+    </test>
+
+    <test name="Генерация Show Id">
+        <classes>
+            <class name="highload.ShowIdTest"/>
+        </classes>
+    </test>-->
+
+
+</suite>

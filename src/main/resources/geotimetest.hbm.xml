@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="hibernate">
+    <class name="Geotimetest" table="geotimetestnew">
+
+        <id name="id" column="id">
+            <generator class="increment"/>
+        </id>
+        <property name="test" column="test"/>
+        <property name="time" column="time"/>
+        <property name="timestamp" column="timestamp"/>
+        <property name="host" column="host"/>
+        <property name="geo" column="geo"/>
+    </class>
+</hibernate-mapping>
