@@ -19,8 +19,8 @@
 
     <test name="Финансы Вебмастера">
         <classes>
-            <class name="mgr.Users.FinanceSudoWmTest"/>
-            <!--<class name="mgr.Users.FinancePayments2WmTest"/>-->
+            <!--<class name="mgr.Users.FinanceSudoWmTest"/>-->
+            <class name="mgr.Users.FinancePayments2WmTest"/>
             <!--<class name="mgr.Users.FinanceOperationHistoryTest"/>-->
         </classes>
     </test>

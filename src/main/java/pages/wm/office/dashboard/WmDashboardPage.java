@@ -1,5 +1,6 @@
 package pages.wm.office.dashboard;
 
+import api.assertions.Assertions;
 import dataclass.FinanceSummary;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -44,6 +45,9 @@ public class WmDashboardPage extends BasePage{
     @FindBy(xpath = "//a[@class='with-hover-underline col-blacky']")
     private WebElement sudowm;
 
+    @FindBy(xpath = "//a[@class='with-hover-underline col-blacky']")
+    private WebElement userName;
+
     @Step("ВМ должен быть на сводной")
     public void isOnDashboard(){
         helper.fluentWait(By.xpath("//h2[contains(@class,'_overview_text')]"));
@@ -73,6 +77,17 @@ public class WmDashboardPage extends BasePage{
         spin.waitSpinner();
     }
 
+    @Step("жду появления лого на сводной")
+    public void waitLogo(){
+        helper.fluentWait(By.xpath("//a[contains(@class,'logotype')]"));
+    }
+
+    @Step("ожидание прогруза  сводной для пустой сводной")
+    public void waitDashboardBlank(){
+        waitLogo();
+        waitSpinner();
+
+    }
 
     @Step("клик по первому офферу из топ предложений")
     public void goToFirstHotOffer(){
@@ -108,4 +123,16 @@ public class WmDashboardPage extends BasePage{
     public String getSudowm() {
         return sudowm.getText();
     }
+
+    @Step("Проверяем что пользователь авторизован на сводной")
+    public void checkUser(String name) {
+        Assertions.assertObjectsEquals(name,getUserName());
+    }
+
+    @Step
+    @Attachment
+    public String getUserName(){
+        return userName.getText();
+    }
+
 }

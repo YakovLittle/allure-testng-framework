@@ -1,5 +1,6 @@
 package pages.wm.front;
 
+import api.assertions.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +22,8 @@ public class FrontPage {
     private WebElementHelper helper;
     private WebDriver driver;
     private final By headerXpath = By.xpath("//div[@class='header-menu']");
+    private final By logoXpath = By.xpath("//a[contains(@class,'cityads-logo-dark')]");
+    private final By user = By.xpath("//a[@id='popup-login-link']");
 
     public FrontPage(WebDriver driver) {
         HtmlElementLoader.populatePageObject(this, driver);
@@ -54,5 +57,35 @@ public class FrontPage {
     public String getHeaderScreen() throws IOException {
         String headerScreen = ScreenshotHelper.openElementBitmap(headerXpath.toString());
         return headerScreen;
+    }
+
+    @Step
+    public String saveLogoScreen() throws Exception {
+        helper.fluentWait(logoXpath);
+        return ScreenshotHelper.saveElementBitmap(driver, driver.findElement((logoXpath))).toString();
+    }
+
+    @Step
+    public String takeLogoScreen() throws Exception {
+        return ScreenshotHelper.takeElementBitmap(driver, driver.findElement((logoXpath))).toString();
+    }
+
+    @Step
+    public String getLogoScreen() throws IOException {
+        helper.fluentWait(logoXpath);
+        String headerScreen = ScreenshotHelper.openElementBitmap(logoXpath.toString());
+        return headerScreen;
+    }
+
+    @Step("Проверяем что юзер авторизован на главной странице")
+    public void checkUserAuthorizedOnMain(String wmName){
+        waitFrontPage();
+        String name = driver.findElement(user).getText();
+        Assertions.assertObjectsEquals(wmName,name);
+    }
+
+    @Step
+    private void waitFrontPage(){
+        helper.fluentWait(logoXpath);
     }
 }

@@ -64,7 +64,7 @@ public class Spinners extends HtmlElement{
                 }
             }
         }
-        Printer.println("table ready at ||||"+ driver.getCurrentUrl() +"|||| "+check);
+        Printer.println("table ready at "+ driver.getCurrentUrl() +" "+check);
         return check;
 
     }
@@ -103,7 +103,7 @@ public class Spinners extends HtmlElement{
                 }
             }
         }
-        Printer.println("chart ready: at ||||"+ driver.getCurrentUrl() +"|||| "+check);
+        Printer.println("chart ready: at "+ driver.getCurrentUrl() +" "+check);
         return check;
     }
 
@@ -137,7 +137,7 @@ public class Spinners extends HtmlElement{
                 ignoring(NoSuchElementException.class).
                 until(new Predicate<WebDriver>(){
                     public boolean apply(WebDriver driver){
-                        Printer.println("small spinner at ||||"+ driver.getCurrentUrl() +"|||| ready: "+!checkSpinnerJquery());
+                        Printer.println("small spinner at "+ driver.getCurrentUrl() +" ready: "+!checkSpinnerJquery());
                         return !checkSpinnerJquery();
                     }
                 });
@@ -164,7 +164,7 @@ public class Spinners extends HtmlElement{
                 ignoring(NoSuchElementException.class).
                 until(new Predicate<WebDriver>(){
                     public boolean apply(WebDriver driver){
-                        Printer.println("small spinner at ||||"+ driver.getCurrentUrl() +"|||| ready: "+!checkSpinnerJquery());
+                        Printer.println("small spinner at "+ driver.getCurrentUrl() +" ready: "+!checkSpinnerJquery());
                         return !checkSpinnerJquery();
                     }
                 })

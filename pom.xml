@@ -170,13 +170,23 @@
 
 
                     <systemPropertyVariables>
-                        <baseUrl>http://beta.cityads.com/</baseUrl>
+                        <baseUrl>http://cityads.com/</baseUrl>
                         <remoteUrl>http://127.0.0.1:4444/wd/hub</remoteUrl>
                         <wmname>cityads@test.ru</wmname>
                         <wmpassword>123698745</wmpassword>
                         <wmRemoteAuth>d2d540277b3ea9bebfdd3b1152940354</wmRemoteAuth>
                         <driver>chrome</driver>
-                        <wms>ufafinans@mail.ru,obzormagazinov@yandex.ru</wms>
+                        <wms>sotta@yandex.ru</wms>
+
+                        <!-- oauth тестовый стенд-->
+                        <oauth>http://auth.team.sagl/</oauth>
+                        <oauthCity>http://branch.team.sagl/</oauthCity>
+                        <oauthUser>e905@cityads.ru</oauthUser>
+                        <oauthPassword>12345</oauthPassword>
+                        <oauthRemoteAuth>a9230dbaa56fe0b8d6653868bb54a9f3</oauthRemoteAuth>
+
+
+
                     </systemPropertyVariables>
 
                 </configuration>

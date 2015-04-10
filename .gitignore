@@ -1,6 +1,7 @@
 #IDEA Files
 .idea
 target
+.svn
 *.iml
 *.ipr
 

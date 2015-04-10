@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import setup.DriverSetup;
 import setup.Printer;
 import setup.Utils;
@@ -28,23 +27,14 @@ public abstract class BaseTest {
         utils = new Utils(driver);
     }
 
-    @BeforeMethod
-    public void logMethodName(Method method){
-        System.out.println();
-        System.out.println();
-        System.out.println("==================================================================");
-        Printer.println("TEST STARTED: " + method.getName());
-    }
 
     @AfterMethod
-    public void logMethodNameAfter(Method method,ITestResult result){
-        Printer.println(" TEST ENDED: " + method.getName());
+    public void log(Method method,ITestResult result){
         int start = ((int) result.getStartMillis());
         int end = ((int) result.getEndMillis());
         int diff = end-start;
         String name = result.getMethod().getMethodName();
         Printer.println(" "+name.toUpperCase()+" TEST DURATION: "+diff);
-        System.out.println("==================================================================");
         System.out.println();
         System.out.println();
     }

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
+import setup.Printer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +33,7 @@ public class WebElementHelper {
 
         WebElement foo = wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
+                Printer.println("waiting for ---> " + locator);
                 return driver.findElement(locator);
             }
         });

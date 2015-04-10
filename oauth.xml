@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CityAds Testsuite" verbose="1" parallel="tests">
+
+    <test name="Авторизация через Oauth">
+        <classes>
+            <class name="oauth.OAuthRedirectTest"/>
+            <class name="oauth.OAuthTest"/>
+        </classes>
+    </test>
+
+</suite>

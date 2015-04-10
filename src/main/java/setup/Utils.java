@@ -2,9 +2,7 @@ package setup;
 
 import dataclass.FinanceSummary;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
@@ -83,6 +81,29 @@ public class Utils {
         driver.get(host);
         Printer.println("Go to "+host);
         driver.manage().window().maximize();
+        return driver.getCurrentUrl();
+    }
+
+    @Step("переход на форму oauth")
+    @Attachment
+    public String openOauthForm(){
+        String host = System.getProperty("oauth");
+        driver.get(host);
+        Printer.println("Go to "+host);
+        driver.manage().window().maximize();
+        return driver.getCurrentUrl();
+    }
+
+    @Step
+    @Attachment
+    public String printCurrentUrl(){
+        Printer.println("CURRENT URL " + driver.getCurrentUrl());
+        return driver.getCurrentUrl();
+    }
+
+    @Step
+    @Attachment
+    public String getCurrentUrl(){
         return driver.getCurrentUrl();
     }
 
@@ -205,6 +226,17 @@ public class Utils {
     @Step
     public void checkStringEquals(String clickId, String clickId2) {
         assertEquals(clickId, clickId2);
+    }
+
+    @Step
+    public List<WebElement> getWebElementsWithJquery(String selector){
+
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        String get = "return $('"+selector+"').get()";
+        Printer.println(get);
+        List<WebElement> elements = (List<WebElement>)js.executeScript(get);
+        return elements;
+
     }
 }
 

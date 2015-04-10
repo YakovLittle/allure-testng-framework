@@ -16,15 +16,18 @@ public class BasePage{
 
     private WebDriver driver;
     private String baseUrl;
+    private String oauthStandUrl;
     private WebElementHelper helper;
+    private Spinners spin;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         this.baseUrl = System.getProperty("baseUrl");
         this.helper = new WebElementHelper(driver);
+        this.oauthStandUrl = System.getProperty("oauthCity");
+        this.spin = new Spinners(driver);
     }
 
-    @Step
     public Object  evaluateJavascript(String script){
         return ((JavascriptExecutor)driver).executeScript(script);
     }
@@ -33,6 +36,13 @@ public class BasePage{
     @Step
     public void goToSection(String url) {
         String testUrl = baseUrl + url;
+        String newtestUrl = testUrl.replaceAll("//","/");
+        driver.get(newtestUrl);
+    }
+
+    @Step
+    public void goToAuthStandSection(String url) {
+        String testUrl = oauthStandUrl + url;
         String newtestUrl = testUrl.replaceAll("//","/");
         driver.get(newtestUrl);
     }
@@ -47,6 +57,11 @@ public class BasePage{
     @Step("Проверяем что данные совпадают")
     public void checkValuesAreEquals(Float i,Float j){
         Assert.assertEquals(i,j,"Холд в финансовой сводной "+i+" не совпадает с холдом в вкладке Начисления и выплаты "+j+"");
+    }
+
+    @Step("ожидание загрузки")
+    public void waitSpinner(){
+        spin.waitSpinner();
     }
 
 }

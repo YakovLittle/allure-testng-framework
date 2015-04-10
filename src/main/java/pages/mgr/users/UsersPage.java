@@ -8,6 +8,7 @@ import pages.wm.BasePage;
 import pages.wm.Spinners;
 import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
+import setup.Printer;
 
 /**
  * Created by a.hodakov on 11.03.2015.
@@ -65,6 +66,7 @@ public class UsersPage extends BasePage{
 
     @Step
     public void setUser(String s) {
+        Printer.println(s);
         filter.fillKeyword(s);
     }
 }

@@ -1,6 +1,7 @@
 package mgr.Users;
 
-import dataclass.FinanceSummary;
+import api.assertions.Assertions;
+import dataclass.OperationsHistoryTableLine;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import pages.mgr.dashboard.MgrDashboardPage;
@@ -9,6 +10,8 @@ import pages.wm.Spinners;
 import pages.wm.front.FrontPage;
 import pages.wm.office.OfficePage;
 import pages.wm.office.dashboard.WmDashboardPage;
+import pages.wm.office.payments.OperationHistoryPage;
+import pages.wm.office.payments.Payments2Page;
 import pages.wm.office.payments.PaymentsPage;
 import roles.Manager;
 import ru.yandex.qatools.allure.annotations.Features;
@@ -18,11 +21,12 @@ import ru.yandex.qatools.allure.model.SeverityLevel;
 import setup.Utils;
 import wm.login.BaseTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Test
 @Features("Финансы Вебмастера")
-public class FinanceSudoWmTest extends BaseTest {
+public class FinanceOperationHistoryTest extends BaseTest {
 
 
 
@@ -36,6 +40,8 @@ public class FinanceSudoWmTest extends BaseTest {
     private WmDashboardPage wmdashboard;
     private PaymentsPage payments;
     private OfficePage office;
+    private Payments2Page payments2;
+    private OperationHistoryPage operations;
 
 
 
@@ -52,6 +58,8 @@ public class FinanceSudoWmTest extends BaseTest {
         payments = new PaymentsPage(driver);
         office = new OfficePage(driver);
         users = new UsersPage(driver);
+        payments2 = new Payments2Page(driver);
+        operations = new OperationHistoryPage(driver);
         utils.openMainPage();
         front.login(mgr);
         mgrdashboard.waitDashboard();
@@ -71,41 +79,40 @@ public class FinanceSudoWmTest extends BaseTest {
         }
         System.out.println(Arrays.deepToString(data));
         return data;
-         /*return new Object[][] {
-                {"sotta@ya.ru"}
-        };*/
+
     }
 
     @Test(dataProvider = "url")
-    @Stories("Сравнение показателей финансовой сводной и начислений и выплат")
+    @Stories("История операций сравнение")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void financeTest(String url) throws InterruptedException {
+    public void operationHystory(String url) throws InterruptedException {
 
-
-
-
-/*      String randomStart = DataGenerator.getRandomIntNumber(100,10000);
-        users.setBalance(randomStart,"");
-        users.setHold("3","3");*/
+        String n = "100";
         users.setUser(url);
         users.clickSearch();
-
         users.clickRandomSudo();
         wmdashboard.getSudowm();
-        FinanceSummary dashboardSummary = wmdashboard.getFinanceSummary();
-        office.goTopayments();
-        FinanceSummary paymentsSummary = payments.getFinanceSummary();
-        utils.compareFinanceSummary(dashboardSummary,paymentsSummary);
+        wmdashboard.goToSection("/webmaster/office/history?limit="+n);
+        operations.waitSpinner();
+        spin.waitJquery();
+        ArrayList<OperationsHistoryTableLine> list = operations.getOperationHistoryList();
+        /**
+         * добавить гет-параметр и обновить страницу, когда это будет реализовано
+         */
+        wmdashboard.goToSection("/webmaster/office/history?limit="+n+"&USE_NEW_BILLING=1");
+        operations.waitSpinner();
+        ArrayList<OperationsHistoryTableLine> list2 = operations.getOperationHistoryList();
+        Assertions.listsEquals(list2, list);
 
     }
 
     @AfterMethod
     public void back(){
         String baseUrl = System.getProperty("baseUrl");
-        driver.get(baseUrl+"/en/webmaster/office/dashboard?sudo=exit");
+        String exit = baseUrl+"/en/webmaster/office/dashboard?sudo=exit".replace("//","/");
+        driver.get(exit);
         utils.printCurrentUrl();
         mgrdashboard.goToUsers();
-        //driver.get("http://beta.cityads.com/en/webmaster/office/dashboard?do=logout");
     }
 
     @AfterSuite
