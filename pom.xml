@@ -31,6 +31,20 @@
     <dependencies>
 
         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.3.1</version>
@@ -170,13 +184,15 @@
 
 
                     <systemPropertyVariables>
-                        <baseUrl>http://cityads.com/</baseUrl>
+
                         <remoteUrl>http://127.0.0.1:4444/wd/hub</remoteUrl>
+
+                        <baseUrl>http://cityads.com/</baseUrl>
                         <wmname>cityads@test.ru</wmname>
                         <wmpassword>123698745</wmpassword>
                         <wmRemoteAuth>d2d540277b3ea9bebfdd3b1152940354</wmRemoteAuth>
-                        <driver>chrome</driver>
-                        <wms>sotta@yandex.ru</wms>
+                        <driver>firefox</driver>
+                        <wms>vakochegarov@gmail.com</wms>
 
                         <!-- oauth тестовый стенд-->
                         <oauth>http://auth.team.sagl/</oauth>
@@ -184,6 +200,11 @@
                         <oauthUser>e905@cityads.ru</oauthUser>
                         <oauthPassword>12345</oauthPassword>
                         <oauthRemoteAuth>a9230dbaa56fe0b8d6653868bb54a9f3</oauthRemoteAuth>
+                        <oauthMgr>dkrivitski@gameleads.ru</oauthMgr>
+                        <oauthMgrPassword>12345</oauthMgrPassword>
+                        <oauthAdv>e901@cityads.ru</oauthAdv>
+                        <oauthAdvPassword>12345</oauthAdvPassword>
+                        <oauthAdvRemoteAuth>a9230dbaa56fe0b8d6653868bb54a9f3</oauthAdvRemoteAuth>
 
 
 

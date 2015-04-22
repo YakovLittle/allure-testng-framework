@@ -23,11 +23,11 @@ public class PopupLoginForm extends HtmlElement {
     private Link enter;
 
     @Name("login popup input")
-    @FindBy(name = "nick")
+    @FindBy(xpath = ".//div[@class='login']/input")
     private TextInput loginInput;
 
     @Name("password popup input")
-    @FindBy(name = "passwd")
+    @FindBy(xpath = ".//div[contains(@class,'passwd')]/input[@type='password']")
     private TextInput passwordInput;
 
     @Name("submit")
@@ -37,8 +37,9 @@ public class PopupLoginForm extends HtmlElement {
 
     @Step("заполняем форму авторизации")
     public void fillLoginForm(String user,String password){
-        //enter.click();
+        loginInput.clear();
         loginInput.sendKeys(user);
+        passwordInput.clear();
         passwordInput.sendKeys(password);
         Printer.println("Current user: " + user);
     }

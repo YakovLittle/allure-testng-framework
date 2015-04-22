@@ -7,7 +7,6 @@ import org.testng.annotations.Test;
 import pages.oauth.OauthPage;
 import pages.wm.front.FrontPage;
 import pages.wm.office.dashboard.WmDashboardPage;
-import roles.OAuthUser;
 import ru.yandex.qatools.allure.annotations.Features;
 import ru.yandex.qatools.allure.annotations.Severity;
 import ru.yandex.qatools.allure.annotations.Stories;
@@ -17,7 +16,7 @@ import wm.login.BaseTest;
 
 @Test
 @Features("авторизация через Oauth")
-public class OAuthTest extends BaseTest {
+public class OAuthNewAccountTest extends BaseTest {
 
     private FrontPage front;
     private OauthPage oauth;
@@ -37,12 +36,11 @@ public class OAuthTest extends BaseTest {
 
 
     @Test
-    @Stories("авторизация c формы без редиректа")
+    @Stories("проверка ссылки У меня нет аккаунта")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void oauthAuthorizeDirect() throws Exception {
-        OAuthUser user = new OAuthUser();
-        oauth.oauthLogin(user);
-        front.checkUserAuthorizedOnMain(user.getName());
+    public void oauthNewAccountTest() throws Exception {
+        oauth.goToNewAccount();
+        front.checkRegistrationFormVisible();
 
     }
 

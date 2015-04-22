@@ -5,8 +5,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.oauth.OauthPage;
+import pages.wm.BasePage;
+import pages.wm.Spinners;
 import pages.wm.front.FrontPage;
 import pages.wm.office.dashboard.WmDashboardPage;
+import pages.wm.stat.StatPage;
 import roles.OAuthUser;
 import ru.yandex.qatools.allure.annotations.Features;
 import ru.yandex.qatools.allure.annotations.Severity;
@@ -17,13 +20,16 @@ import wm.login.BaseTest;
 
 @Test
 @Features("авторизация через Oauth")
-public class OAuthTest extends BaseTest {
+public class OAuthDownloadXMLTest extends BaseTest {
 
     private FrontPage front;
     private OauthPage oauth;
     private WmDashboardPage dashboard;
     private Utils utils;
     private WebDriver driver;
+    private StatPage stat;
+    private Spinners spin;
+    private BasePage page;
 
     @BeforeClass
     public void setUp(){
@@ -32,17 +38,26 @@ public class OAuthTest extends BaseTest {
         front = new FrontPage(driver);
         oauth = new OauthPage(driver);
         dashboard = new WmDashboardPage(driver);
+        stat = new StatPage(driver);
+        spin = new Spinners(driver);
+        page = new BasePage(driver);
         utils.openOauthForm();
     }
 
 
     @Test
-    @Stories("авторизация c формы без редиректа")
+    @Stories("выгрузка старой статы в XML")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void oauthAuthorizeDirect() throws Exception {
+    public void oauthAuthorizeXMLDownloadTest() throws Exception {
         OAuthUser user = new OAuthUser();
         oauth.oauthLogin(user);
-        front.checkUserAuthorizedOnMain(user.getName());
+        page.waitTable();
+        //front.checkUserAuthorizedOnMain(user.getName());
+        utils.goToAuthStandSection("/ru/webmaster/statistika/standard_reports/offers_437201152.0.htm");
+        stat.waitOverview();
+        spin.waitSpinner();
+        stat.export();
+
 
     }
 

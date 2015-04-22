@@ -1,12 +1,16 @@
 package pages.wm;
 
 
+import api.assertions.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import pages.WebElementHelper;
 import ru.yandex.qatools.allure.annotations.Step;
+import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 import setup.Printer;
 
 /**
@@ -19,6 +23,9 @@ public class BasePage{
     private String oauthStandUrl;
     private WebElementHelper helper;
     private Spinners spin;
+    private Header header;
+    private BlueTable blueTable;
+    private Paginator paginator;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -26,12 +33,15 @@ public class BasePage{
         this.helper = new WebElementHelper(driver);
         this.oauthStandUrl = System.getProperty("oauthCity");
         this.spin = new Spinners(driver);
+        HtmlElementLoader.populatePageObject(this, driver);
     }
 
     public Object  evaluateJavascript(String script){
         return ((JavascriptExecutor)driver).executeScript(script);
     }
 
+    @FindBy(xpath = "//h1")
+    private WebElement h1;
 
     @Step
     public void goToSection(String url) {
@@ -44,7 +54,13 @@ public class BasePage{
     public void goToAuthStandSection(String url) {
         String testUrl = oauthStandUrl + url;
         String newtestUrl = testUrl.replaceAll("//","/");
+        Printer.println("GO TO "+newtestUrl);
         driver.get(newtestUrl);
+    }
+
+    @Step("проверка что хедер отображается")
+    public void checkHeader(){
+        Assertions.checkWebElementExists(header);
     }
 
 
@@ -64,4 +80,28 @@ public class BasePage{
         spin.waitSpinner();
     }
 
+    @Step("проверка наличия синей таблицы")
+    public void checkTable() {
+        Assertions.checkWebElementExists(blueTable);
+    }
+
+    @Step("проверка наличия пагинатора")
+    public void checkpaginator(){
+        Assertions.checkWebElementExists(paginator);
+    }
+
+    @Step
+    public void checkH1(String s) {
+        Assertions.checkWebElementHasText(h1,s);
+    }
+
+    @Step("ожидание загрузки страницы менеджера")
+    public void waitMgrPage(){
+        helper.fluentWait(By.xpath("//div[@class='page']"));
+    }
+
+    @Step("ожидание загрузки таблицы")
+    public void waitTable() {
+        helper.fluentWait(By.xpath("//table[contains(@class,'blue_table')]"));
+    }
 }

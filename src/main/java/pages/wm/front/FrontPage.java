@@ -5,7 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import pages.WebElementHelper;
+import pages.wm.front.elements.ForgotPasswordForm;
 import pages.wm.front.elements.PopupLoginForm;
+import pages.wm.front.elements.RegistrationForm;
 import roles.User;
 import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
@@ -19,6 +21,8 @@ import java.io.IOException;
 public class FrontPage {
 
     private PopupLoginForm popupLoginForm;
+    private ForgotPasswordForm forgotForm;
+    private RegistrationForm regForm;
     private WebElementHelper helper;
     private WebDriver driver;
     private final By headerXpath = By.xpath("//div[@class='header-menu']");
@@ -33,6 +37,8 @@ public class FrontPage {
 
     @Step("заполняем форму авторизации в попапе")
     public void login(User user){
+        waitLoad();
+        driver.manage().window().maximize();
         ((JavascriptExecutor) driver).executeScript("$('#popup-login-link').click();");
         try {
             Thread.sleep(1000);
@@ -87,5 +93,20 @@ public class FrontPage {
     @Step
     private void waitFrontPage(){
         helper.fluentWait(logoXpath);
+    }
+
+    @Step("Проверяем что форма Восстановление доступа видима")
+    public void checkForgotPasswordFormVisible(){
+        Assertions.assertTrue(forgotForm.isDisplayed());
+    }
+
+    @Step("Проверяем что форма Регистрации видима")
+    public void checkRegistrationFormVisible() {
+        Assertions.checkWebElementExists(regForm);
+    }
+
+    @Step("Ждем загрузки главной страницы")
+    public void waitLoad() {
+        helper.fluentWait(By.xpath("//img[@src='/images/lask/_cb-background.jpg']"));
     }
 }

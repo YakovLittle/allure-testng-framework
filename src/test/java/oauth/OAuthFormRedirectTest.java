@@ -17,7 +17,7 @@ import wm.login.BaseTest;
 
 @Test
 @Features("авторизация через Oauth")
-public class OAuthTest extends BaseTest {
+public class OAuthFormRedirectTest extends BaseTest {
 
     private FrontPage front;
     private OauthPage oauth;
@@ -37,12 +37,15 @@ public class OAuthTest extends BaseTest {
 
 
     @Test
-    @Stories("авторизация c формы без редиректа")
+    @Stories("редирект с формы если уже авторизован")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void oauthAuthorizeDirect() throws Exception {
+    public void oauthAuthorizeFormRedirect() throws Exception {
         OAuthUser user = new OAuthUser();
         oauth.oauthLogin(user);
         front.checkUserAuthorizedOnMain(user.getName());
+        utils.openOauthForm();
+        oauth.checkFormNotVisible();
+        dashboard.checkUser(user.getName());
 
     }
 

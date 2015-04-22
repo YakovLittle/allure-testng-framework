@@ -17,7 +17,7 @@ import setup.Utils;
 import wm.login.BaseTest;
 
 @Test
-@Features("Авторизация через Oauth")
+@Features("авторизация через Oauth")
 public class OAuthRedirectTest extends BaseTest {
 
     private FrontPage front;
@@ -35,7 +35,7 @@ public class OAuthRedirectTest extends BaseTest {
         oauth = new OauthPage(driver);
         dashboard = new WmDashboardPage(driver);
         dashboard.goToAuthStandSection(section);
-        //utils.openOauthForm();
+
     }
 
 

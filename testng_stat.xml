@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CityAds Testsuite" verbose="1" parallel="tests">
+
+    <test name="Статистика реалтайм">
+        <classes>
+            <class name="wm.stat.StatRealTimeTest"/>
+        </classes>
+    </test>
+
+    <test name="Статистика по офферам">
+        <classes>
+            <class name="wm.stat.StatByOffersTest"/>
+        </classes>
+    </test>
+
+
+
+
+</suite>

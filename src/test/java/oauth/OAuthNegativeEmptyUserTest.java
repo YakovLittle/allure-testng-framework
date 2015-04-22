@@ -9,15 +9,13 @@ import pages.wm.front.FrontPage;
 import pages.wm.office.dashboard.WmDashboardPage;
 import roles.OAuthUser;
 import ru.yandex.qatools.allure.annotations.Features;
-import ru.yandex.qatools.allure.annotations.Severity;
 import ru.yandex.qatools.allure.annotations.Stories;
-import ru.yandex.qatools.allure.model.SeverityLevel;
 import setup.Utils;
 import wm.login.BaseTest;
 
 @Test
 @Features("авторизация через Oauth")
-public class OAuthTest extends BaseTest {
+public class OAuthNegativeEmptyUserTest extends BaseTest {
 
     private FrontPage front;
     private OauthPage oauth;
@@ -25,24 +23,28 @@ public class OAuthTest extends BaseTest {
     private Utils utils;
     private WebDriver driver;
 
+
     @BeforeClass
     public void setUp(){
+
         driver = super.getDriver();
         utils = super.getUtils();
         front = new FrontPage(driver);
         oauth = new OauthPage(driver);
         dashboard = new WmDashboardPage(driver);
         utils.openOauthForm();
+
+
     }
 
 
     @Test
-    @Stories("авторизация c формы без редиректа")
-    @Severity(value = SeverityLevel.CRITICAL)
-    public void oauthAuthorizeDirect() throws Exception {
-        OAuthUser user = new OAuthUser();
+    @Stories("авторизация c формы без редиректа не заполнен логин и пароль")
+    public void emptyUserAuthorizationTest(){
+        OAuthUser user = new OAuthUser("","");
         oauth.oauthLogin(user);
-        front.checkUserAuthorizedOnMain(user.getName());
+        oauth.checkFormVisible();
+        oauth.checkErrorVisible();
 
     }
 

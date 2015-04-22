@@ -1,5 +1,6 @@
 package pages.mgr.dashboard.elements;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.htmlelements.annotations.Block;
@@ -40,9 +41,18 @@ public class PageHeader  extends HtmlElement {
     @FindBy(id = "menu_top_wm_item_16239")
     private Link offers;
 
+    @FindBy(xpath = "//a[@id='_left_menu_id_436321191']")
+    private WebElement user2;
+
+
     @Step("Клик по ссылке Пользователи")
     public void clickUsers(){
         users.click();
+    }
+
+    @Step("Клик по ссылке Пользователи")
+    public void clickUsers2(){
+        user2.click();
     }
 
     @Step("Клик по ссылке Финансы")

@@ -2,6 +2,7 @@ package pages.wm.office.dashboard;
 
 import api.assertions.Assertions;
 import dataclass.FinanceSummary;
+import dataclass.FinanceSummaryForBuling;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -116,8 +117,37 @@ public class WmDashboardPage extends BasePage{
                 finance.getOnAdvPayment(),
                 finance.getOnProcessing(),
                 finance.getOnHoldTotal(),
-                finance.getIssuedCredit());
+                finance.getIssuedCredit()
+
+        );
     }
+
+    @Step("получение данных из финансовой сводной для билинга")
+    @Attachment
+    public FinanceSummaryForBuling getFinanceSummaryforBilling() {
+        spin.waitJquery();
+        spin.waitSpinner();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new FinanceSummaryForBuling(
+                finance.getBalance(),
+                finance.getAvailable(),
+                finance.getOnHold(),
+                finance.getOnAdvPayment(),
+                finance.getOnProcessing(),
+                finance.getOnHoldTotal(),
+                finance.getIssuedCredit(),
+                finance.getOpenCommision(),
+                finance.getAprovedCommision(),
+                finance.getFromLastPeriod(),
+                finance.getFromThisMonth(),
+                finance.getFeedAndOthers()
+        );
+    }
+
 
     @Attachment
     public String getSudowm() {

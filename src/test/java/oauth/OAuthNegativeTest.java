@@ -17,13 +17,14 @@ import wm.login.BaseTest;
 
 @Test
 @Features("авторизация через Oauth")
-public class OAuthTest extends BaseTest {
+public class OAuthNegativeTest extends BaseTest {
 
     private FrontPage front;
     private OauthPage oauth;
     private WmDashboardPage dashboard;
     private Utils utils;
     private WebDriver driver;
+    private OAuthUser user;
 
     @BeforeClass
     public void setUp(){
@@ -32,19 +33,26 @@ public class OAuthTest extends BaseTest {
         front = new FrontPage(driver);
         oauth = new OauthPage(driver);
         dashboard = new WmDashboardPage(driver);
-        utils.openOauthForm();
+
+        user = new OAuthUser("kjdhfkldhjasfklhjasdfkljhasdfkljhaskd","123kj1;l3kj1kl2j31;l2k3j");
+
+        utils.goToAuthStand();
+
     }
 
 
     @Test
-    @Stories("авторизация c формы без редиректа")
+    @Stories("авторизация c формы без редиректа неправильный пароль")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void oauthAuthorizeDirect() throws Exception {
-        OAuthUser user = new OAuthUser();
-        oauth.oauthLogin(user);
-        front.checkUserAuthorizedOnMain(user.getName());
+    public void oauthAuthorizationWrongUserTest() throws Exception {
+
+        front.login(user);
+        oauth.checkFormVisible();
+        oauth.checkErrorVisible();
+
 
     }
+
 
 
     @AfterClass

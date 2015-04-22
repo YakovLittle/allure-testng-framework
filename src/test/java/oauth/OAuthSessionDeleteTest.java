@@ -1,5 +1,6 @@
 package oauth;
 
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -17,7 +18,7 @@ import wm.login.BaseTest;
 
 @Test
 @Features("авторизация через Oauth")
-public class OAuthTest extends BaseTest {
+public class OAuthSessionDeleteTest extends BaseTest {
 
     private FrontPage front;
     private OauthPage oauth;
@@ -27,22 +28,31 @@ public class OAuthTest extends BaseTest {
 
     @BeforeClass
     public void setUp(){
+
         driver = super.getDriver();
         utils = super.getUtils();
         front = new FrontPage(driver);
         oauth = new OauthPage(driver);
         dashboard = new WmDashboardPage(driver);
         utils.openOauthForm();
+        OAuthUser user = new OAuthUser();
+        oauth.oauthLogin(user);
+        front.checkUserAuthorizedOnMain(user.getName());
+
     }
 
 
     @Test
-    @Stories("авторизация c формы без редиректа")
+    @Stories("очистка сессии на сервере авторизации")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void oauthAuthorizeDirect() throws Exception {
-        OAuthUser user = new OAuthUser();
-        oauth.oauthLogin(user);
-        front.checkUserAuthorizedOnMain(user.getName());
+    public void oauthAuthorizeSessionDeleteTest() throws Exception {
+
+        utils.openOauthForm();
+        utils.getAllCookies();
+        Cookie cookie = utils.getCookieNamed("PHPSESSID");
+        utils.deleteCookie(cookie);
+        utils.refreshPage();
+        oauth.checkFormVisible();
 
     }
 

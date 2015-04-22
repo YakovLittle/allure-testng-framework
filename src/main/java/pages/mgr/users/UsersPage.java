@@ -1,5 +1,7 @@
 package pages.mgr.users;
 
+import api.assertions.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pages.WebElementHelper;
 import pages.mgr.elements.FilterFooter;
@@ -61,6 +63,7 @@ public class UsersPage extends BasePage{
     @Step("кликаем на рандомное судо")
     public void clickRandomSudo(){
         this.evaluateJavascript("$('a[id*=\"id_el_link_enter\"]').eq(Math.random() * $('a[id*=\"id_el_link_enter\"]').length |0).get(0).click();");
+        waitDashboard();
         spin.waitSpinner();
     }
 
@@ -68,5 +71,15 @@ public class UsersPage extends BasePage{
     public void setUser(String s) {
         Printer.println(s);
         filter.fillKeyword(s);
+    }
+
+    @Step("проверяем что фильтр в разделе Пользователи виден")
+    public void checkFilterIsVisible() {
+        Assertions.assertTrue(filter.isDisplayed());
+    }
+
+    @Step("ждем загрузку фильтра в разделе Пользователи")
+    public void waitFilters() {
+        helper.fluentWait(By.xpath("//table[contains(@class,'filter_table')]"));
     }
 }

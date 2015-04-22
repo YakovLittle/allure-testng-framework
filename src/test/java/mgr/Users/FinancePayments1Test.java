@@ -1,7 +1,7 @@
 package mgr.Users;
 
 import api.assertions.Assertions;
-import dataclass.OperationsHistoryTableLine;
+import dataclass.FinanceSummary;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import pages.mgr.dashboard.MgrDashboardPage;
@@ -21,12 +21,11 @@ import ru.yandex.qatools.allure.model.SeverityLevel;
 import setup.Utils;
 import wm.login.BaseTest;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @Test
 @Features("Новый билинг")
-public class FinanceOperationHistoryTest extends BaseTest {
+public class FinancePayments1Test extends BaseTest {
 
 
 
@@ -83,26 +82,23 @@ public class FinanceOperationHistoryTest extends BaseTest {
     }
 
     @Test(dataProvider = "url")
-    @Stories("История операций сравнение")
+    @Stories("Начисления и выплаты сравнение с новым билингом")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void operationHystory(String url) throws InterruptedException {
+    public void Payments1(String url) throws InterruptedException {
 
         String n = "100";
         users.setUser(url);
         users.clickSearch();
         users.clickRandomSudo();
         wmdashboard.getSudowm();
-        wmdashboard.goToSection("/webmaster/office/history?limit="+n);
         operations.waitSpinner();
         spin.waitJquery();
-        ArrayList<OperationsHistoryTableLine> list = operations.getOperationHistoryList();
-        /**
-         * добавить гет-параметр и обновить страницу, когда это будет реализовано
-         */
-        wmdashboard.goToSection("/webmaster/office/history?limit="+n+"&USE_NEW_BILLING=1");
-        operations.waitSpinner();
-        ArrayList<OperationsHistoryTableLine> list2 = operations.getOperationHistoryList();
-        Assertions.listsEquals(list2, list);
+        office.goTopayments();
+        FinanceSummary paymentsSummary = payments.getFinanceSummary();
+        wmdashboard.goToSection("/ru/webmaster/office/payments?nb=test");
+        spin.waitSpinner();
+        FinanceSummary paymentsSummary2 = payments.getFinanceSummary();
+        Assertions.assertObjectsEquals(paymentsSummary,paymentsSummary2);
 
     }
 

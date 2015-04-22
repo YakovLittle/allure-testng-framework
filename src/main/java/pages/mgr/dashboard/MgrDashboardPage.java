@@ -34,6 +34,8 @@ public class MgrDashboardPage extends BasePage{
         spin.waitSpinner();
         header.clickUsers();
         spin.waitSpinner();
+        header.clickUsers2();
+        spin.waitSpinner();
 
     }
     @Step("переход в финансы")

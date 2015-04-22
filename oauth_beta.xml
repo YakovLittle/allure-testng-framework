@@ -20,22 +20,22 @@
             <class name="oauth.OAuthWrongRoleTest"/>
             <class name="oauth.OAuthDownloadXMLTest"/>
             <class name="oauth.OAuthFormRedirectTest"/>
-            <class name="oauth.OauthSudoWmTest"/>
+          <!--  <class name="oauth.OauthSudoWmTest"/>-->
             <class name="oauth.OAuthNewMgrRedirectTest"/>
         </classes>
     </test>
-   <test name="Статистика реалтайм">
+<!--   <test name="Статистика реалтайм">
         <classes>
             <class name="wm.stat.StatRealTimeTest"/>
 
         </classes>
-    </test>
+    </test>-->
 
-    <test name="Статистика по офферам">
+<!--    <test name="Статистика по офферам">
         <classes>
             <class name="wm.stat.StatByOffersTest"/>
         </classes>
-    </test>
+    </test>-->
 
 
 </suite>

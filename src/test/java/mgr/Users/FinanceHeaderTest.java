@@ -1,7 +1,7 @@
 package mgr.Users;
 
 import api.assertions.Assertions;
-import dataclass.OperationsHistoryTableLine;
+import dataclass.Header;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import pages.mgr.dashboard.MgrDashboardPage;
@@ -21,12 +21,11 @@ import ru.yandex.qatools.allure.model.SeverityLevel;
 import setup.Utils;
 import wm.login.BaseTest;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @Test
 @Features("Новый билинг")
-public class FinanceOperationHistoryTest extends BaseTest {
+public class FinanceHeaderTest extends BaseTest {
 
 
 
@@ -85,24 +84,23 @@ public class FinanceOperationHistoryTest extends BaseTest {
     @Test(dataProvider = "url")
     @Stories("История операций сравнение")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void operationHystory(String url) throws InterruptedException {
+    public void header(String url) throws InterruptedException {
 
         String n = "100";
         users.setUser(url);
         users.clickSearch();
         users.clickRandomSudo();
         wmdashboard.getSudowm();
-        wmdashboard.goToSection("/webmaster/office/history?limit="+n);
         operations.waitSpinner();
         spin.waitJquery();
-        ArrayList<OperationsHistoryTableLine> list = operations.getOperationHistoryList();
-        /**
-         * добавить гет-параметр и обновить страницу, когда это будет реализовано
-         */
-        wmdashboard.goToSection("/webmaster/office/history?limit="+n+"&USE_NEW_BILLING=1");
-        operations.waitSpinner();
-        ArrayList<OperationsHistoryTableLine> list2 = operations.getOperationHistoryList();
-        Assertions.listsEquals(list2, list);
+
+
+        Header h = office.getHeader();
+        wmdashboard.goToSection("/ru/webmaster/office/dashboard?nb=test");
+
+        spin.waitSpinner();
+        Header h2 = office.getHeader();
+        Assertions.assertObjectsEquals(h,h2);
 
     }
 

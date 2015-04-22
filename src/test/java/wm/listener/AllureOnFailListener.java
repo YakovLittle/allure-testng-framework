@@ -30,6 +30,7 @@ public class AllureOnFailListener implements ITestListener {
         Printer.println("-------------------- Exception -------------------------------");
         Object currentClass = result.getInstance();
         WebDriver webDriver = ((BaseTest) currentClass).getDriver();
+        Printer.println("CURRENT  URL: " + webDriver.getCurrentUrl());
         Utils utils = ((BaseTest) currentClass).getUtils();
         if (webDriver != null)
         {

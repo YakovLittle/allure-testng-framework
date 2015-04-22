@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CityAds Testsuite" verbose="1" parallel="classes">
+
+
+
+    <test name="Новый билинг">
+        <classes>
+            <class name="mgr.Users.FinanceOperationHistoryTest"/>
+            <class name="mgr.Users.FinanceNewbillingSvodnayaTest"/>
+            <class name="mgr.Users.FinanceHeaderTest"/>
+            <class name="mgr.Users.FinancePayments1Test"/>
+        </classes>
+    </test>
+
+
+</suite>

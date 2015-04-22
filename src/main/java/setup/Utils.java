@@ -13,14 +13,13 @@ import ru.yandex.qatools.allure.annotations.Step;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -89,6 +88,7 @@ public class Utils {
     public String openOauthForm(){
         String host = System.getProperty("oauth");
         driver.get(host);
+        driver.manage().window().maximize();
         Printer.println("Go to "+host);
         driver.manage().window().maximize();
         return driver.getCurrentUrl();
@@ -237,6 +237,77 @@ public class Utils {
         List<WebElement> elements = (List<WebElement>)js.executeScript(get);
         return elements;
 
+    }
+
+    @Step
+    public void goToAuthStandSection(String url) {
+        String oauthStandUrl = System.getProperty("oauthCity");
+        String testUrl = oauthStandUrl + url;
+        String newtestUrl = testUrl.replaceAll("//","/");
+        Printer.println("go to url " + newtestUrl);
+        driver.get(newtestUrl);
+        driver.manage().window().maximize();
+    }
+
+    @Step("переход на главную страницу")
+    public void goToAuthStand() {
+        String oauthStandUrl = System.getProperty("oauthCity");
+        driver.get(oauthStandUrl);
+    }
+
+    @Step
+    @Attachment
+    public Cookie getCookieNamed(String name) {
+        return driver.manage().getCookieNamed(name);
+    }
+
+    @Step
+    public void deleteCookie(Cookie cookie){
+        driver.manage().deleteCookie(cookie);
+    }
+
+    @Step
+    @Attachment
+    public Set<Cookie> getAllCookies() {
+        return driver.manage().getCookies();
+    }
+
+    @Step
+    public void refreshPage() {
+        driver.navigate().refresh();
+    }
+
+    @Step("удаление куки PHPSESSID c сервера авторизации")
+    public void deletePhpAuthSession() {
+        openOauthForm();
+        getAllCookies();
+        Cookie cookie = getCookieNamed("PHPSESSID");
+        deleteCookie(cookie);
+    }
+
+    @Step
+    public void runShellScript(String script) {
+        try {
+            Runtime rt = Runtime.getRuntime();
+            BufferedReader input = null;
+            Process pr = null;
+
+            pr = rt.exec(script);
+            input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+
+            String line = null;
+
+            while ((line = input.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            int exitVal = pr.waitFor();
+            System.out.println("Exited with error code " + exitVal);
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
     }
 }
 

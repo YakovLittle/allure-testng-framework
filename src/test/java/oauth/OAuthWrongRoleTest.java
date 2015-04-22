@@ -1,9 +1,7 @@
 package oauth;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.oauth.OauthPage;
 import pages.wm.front.FrontPage;
 import pages.wm.office.dashboard.WmDashboardPage;
@@ -17,7 +15,7 @@ import wm.login.BaseTest;
 
 @Test
 @Features("авторизация через Oauth")
-public class OAuthTest extends BaseTest {
+public class OAuthWrongRoleTest extends BaseTest {
 
     private FrontPage front;
     private OauthPage oauth;
@@ -32,19 +30,31 @@ public class OAuthTest extends BaseTest {
         front = new FrontPage(driver);
         oauth = new OauthPage(driver);
         dashboard = new WmDashboardPage(driver);
-        utils.openOauthForm();
+
+    }
+
+
+    @BeforeMethod
+    public void open(){
+        utils.goToAuthStand();
     }
 
 
     @Test
-    @Stories("авторизация c формы без редиректа")
+    @Stories("раздел /mng_new/finance/wm_payments недоступен вебмастеру (перекидывает на главную)")
     @Severity(value = SeverityLevel.CRITICAL)
-    public void oauthAuthorizeDirect() throws Exception {
+    public void oAuthWrongRoleMgrTest() throws Exception {
         OAuthUser user = new OAuthUser();
-        oauth.oauthLogin(user);
+        front.waitLoad();
+        front.login(user);
+        dashboard.waitDashboardBlank();
+        dashboard.checkUser(user.getName());
+
+        utils.goToAuthStandSection("/mng_new/finance/wm_payments");
         front.checkUserAuthorizedOnMain(user.getName());
 
     }
+
 
 
     @AfterClass

@@ -47,6 +47,14 @@ public class Spinners extends HtmlElement{
         return animation;
     }
 
+    private boolean checkDynamicSpinnerIsNotActive(){
+        Boolean animation;
+        animation = (Boolean)((JavascriptExecutor)driver).executeScript("return $('div[class=\"dynamics\"]').size() == 0");
+        return animation;
+    }
+
+    //$('div[class="dynamics"]').size()
+
     private boolean tableIsReady(){
         boolean contextCheck = true;
         boolean cityCheck = true;
@@ -122,7 +130,7 @@ public class Spinners extends HtmlElement{
                 }
             }
         }
-        Printer.println("delta chart ready: at"+ driver.getCurrentUrl() +" "+check);
+        Printer.println("delta chart ready: at "+ driver.getCurrentUrl() +" "+check);
         return check;
     }
     
@@ -172,7 +180,7 @@ public class Spinners extends HtmlElement{
         this.waitJquery();
     }
 
-
+    @Step("ожидание выполнения анимации JQuery")
     public void waitJquery(){
         new FluentWait<WebDriver>(driver).
                 withTimeout(60, TimeUnit.SECONDS).
@@ -183,5 +191,18 @@ public class Spinners extends HtmlElement{
                            return checkJqueryIsActive();
                        }
                    });
+    }
+
+    @Step("ожидание выполнения анимации крутилок динамики")
+    public void waitDynamics(){
+        new FluentWait<WebDriver>(driver).
+                withTimeout(30, TimeUnit.SECONDS).
+                pollingEvery(1000, TimeUnit.MILLISECONDS).
+                until(new Predicate<WebDriver>() {
+                    public boolean apply(WebDriver driver) {
+                        Printer.println("wait for $('div[class=\"dynamics\"]').size() == 0  ---> " + checkDynamicSpinnerIsNotActive());
+                        return checkDynamicSpinnerIsNotActive();
+                    }
+                });
     }
 }
